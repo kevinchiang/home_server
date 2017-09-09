@@ -10,9 +10,10 @@ services:
       - PGID=1000
       - PUID=1000    
     volumes:
-      - <config-path>:/config
-      - <download-path>:/downloads 
+      - :/config
+      - :/downloads 
       - /etc/localtime:/etc/localtime:ro
+
   transmission_vpn:
     image: "haugene/transmission-openvpn"
     container_name: transmission_vpn
@@ -26,7 +27,7 @@ services:
     environment:
       - PGID=1000
       - PUID=1000
-      - OPENVPN_PROVIDER=
+      - OPENVPN_PROVIDER=PIA
       - OPENVPN_CONFIG=
       - OPENVPN_USERNAME=
       - OPENVPN_PASSWORD=
@@ -36,5 +37,34 @@ services:
       - TRANSMISSION_RPC_PASSWORD=sample_password
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - <transmission-data-path>:/data
+      - :/data
 
+  sonarr:
+    image: "linuxserver/sonarr"
+    container_name: sonarr_instance_
+    ports:
+      - 8989:8989
+    restart: always
+    environment:
+      - PGID=1000
+      - PUID=1000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - :/config
+      - :/tv
+      - :/downloads
+
+  headphones:
+    image: "linuxserver/headphones"
+    container_name: headphones_insta
+    ports:
+      - 8181:8181
+    restart: always
+    environment:
+      - PGID=1000
+      - PUID=1000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - :/config
+      - :/music
+      - :/downloads
