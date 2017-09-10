@@ -68,3 +68,41 @@ services:
       - :/config
       - :/music
       - :/downloads
+  
+  nginx:
+    image: "linuxserver/nginx"
+    container_name: nginx_instance__
+    ports:
+      - 8080:80
+      - 443:443
+    restart: always
+    environment:
+      - PGID=1000
+      - PUID=1000
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - :/config
+  
+  pihole:
+    image: "diginc/pi-hole:alpine"
+    container_name: pihole_instance_
+    ports:
+      - 80:80
+      - 53:53/tcp
+      - 53:53/udp
+    restart: always
+    environment:
+      - ServerIP=
+      - WEBPASSWORD=sample_password
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - :/etc/pihole
+      - :/etc/dnsmasq.d
+
+
+
+
+
+
+
+
