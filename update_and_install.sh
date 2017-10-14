@@ -1,11 +1,11 @@
 sudo apt-get update
-sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common wget python
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common gnupg2 wget python
+curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg | sudo apt-key add -
 
 sudo add-apt-repository \
-   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-      $(lsb_release -cs) \
-         stable"
+   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+   $(lsb_release -cs) \
+   stable"
 
 sudo apt-get update
 sudo apt-get install -y docker-ce
